@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>MarkDown基本操作</title>
+<title>Git</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 /* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
@@ -291,43 +291,112 @@ img {
 </style>
 </head>
 <body>
-<h1>一级标题</h1>
-<h2>二级</h2>
-<h3>三级</h3>
-<h4>四级</h4>
-<h5>五级</h5>
-<h6>六级</h6>
-<p>段落的前后要有空行，所谓的空行是指没有文字内容。    <br />
-若想在段内<strong>强制换行</strong>的方式是使用<em>两个以上空格</em>加上回车（引用中换行省略回车）。</p>
-<blockquote>
-<p>区块引用</p>
-<blockquote>
-<p>嵌套</p>
-<blockquote>
-<p>再嵌套</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<hr />
-<p>代码块加四个空格     <br />
-注意:需要和普通段落之间存在空行。</p>
-<pre><code>xcxckxzncvmzxn
-dd
+<h1>Git的使用</h1>
+<h2>配置使用人的账号和邮箱</h2>
+<pre><code>git config --global user.name zhufengzhufeng
+git config --global user.email xxxxx
+git config --list 查看所有配置
 </code></pre>
 
-<hr />
+<p>mkdir 创建目录</p>
+<h2>初始化git</h2>
+<pre><code>git init
+</code></pre>
+
+<h2>初始化文件</h2>
+<pre><code>echo hello &gt; index.txt       覆盖写入
+echo hello word &gt;&gt; index.txt 写入
+cat index.txt  查看文本里的内容
+</code></pre>
+
+<blockquote>
+<p>一个大于号表示清空并写入 &gt;&gt; 表示 追加</p>
+</blockquote>
+<h2>删除文件rm</h2>
+<h2>查看状态  git status</h2>
+<h2>将文件加入到暂存区中</h2>
+<p><code>git add file
+git add ./git add -A</code></p>
+<h2>提交commit</h2>
+<p><code>git commit -m&quot;first&quot;</code></p>
+<h2>vi控制台</h2>
+<p>如果进入编辑模式可以i键进入插入模式</p>
 <ul>
-<li>1.sdshdffdsf</li>
-<li>2.ddfdf</li>
-<li>3.dddd</li>
+<li>i表示编辑</li>
+<li>退出esc + :wq</li>
 </ul>
-<hr />
-<p><code>哈哈哈  标记作用</code></p>
-<hr />
-<p>&lt;title&gt;菜鸟教程(runoob.com)&lt;/title&gt; </p>
-<p><img src="http://t1.qpic.cn/mblogpic/765ac54fc0c07a848d00/460.jpg" alt="插入图片" /></p>
-<hr />
-<img src=".\1.jpg" width = "200" height = "200"/>
+<h2>查看版本库信息</h2>
+<pre><code>git log --oneline 查看版本库信息
+git reflog   查看未来的版本
+</code></pre>
+
+<h2>比较代码差异</h2>
+<pre><code>git diff            比较工作区和暂存区的区别
+git diff master     比较工作区和版本库的区别
+git diff --cached   比较暂存区和版本库的区别
+</code></pre>
+
+<h2>从暂存区删除本次的add</h2>
+<p><code>git reset HEAD &lt;file&gt;</code></p>
+<blockquote>
+<p>取消本次的add</p>
+</blockquote>
+<h2>从缓存区 从历史区将代码覆盖掉工作区</h2>
+<p><code>git checkout &lt;file&gt;</code> </p>
+<h2>回到过去</h2>
+<p><code>git reset --hard commit_id/HEAD^^^^^^^/HEAD~6</code></p>
+<h2>分支</h2>
+<pre><code>查看所有分支git branch 
+创建分支git branch dev
+切换分支git checkout dev 
+创建并切换git checkout -b fixbug
+删除分支git branch -d dev
+合并分支git merge 分支名
+</code></pre>
+
+<blockquote>
+<p>在主干上拉取一条分支，在分支上进行开发，开发后，在主干上将代码进行合并，主干上目前没有人开发，可以使用快转的方式，将我们的指针直接指向到分支的最新装态 fast-forward</p>
+</blockquote>
+<h2>在github上部署静态页</h2>
+<p>需要将特定的内容推送到github上的gh-pages分支上</p>
+<ul>
+<li>创建一个gh-pages的分支
+<code>git checkout -b gh-pages</code></li>
+<li>将代码commit 到这个分支上
+<code>git add .
+git commit -m 'ok'</code></li>
+<li>连接远程仓库和本地仓库
+<code>git remote add aaa 地址</code></li>
+<li>将代码推送到远程仓库上
+<code>git push aaa gh-pages</code></li>
+</ul>
+<h2>合并分支产生冲突</h2>
+<pre><code>git log --graph --oneline --decorate 查看
+</code></pre>
+
+<h2>合并分支产生冲突</h2>
+<ul>
+<li>在主干的某个版本上进行分支开发，在分支上开发1.txt这个文件(drag)，在主干上也开发1.txt(limit),此时回到主干上合并时，会产生冲突，需要我们手动解决</li>
+</ul>
+<h2>从工作区中提交到历史区</h2>
+<p><code>git commit -a -m'drag'</code></p>
+<h2>解决冲突</h2>
+<p>去掉&gt;&gt;&gt;&gt;&gt;&gt; ========  &lt;&lt;&lt;&lt;&lt;&lt;&lt; 保留需要的内容再次提交</p>
+<h2>合并</h2>
+<p>git rebase 变基
+git cherry-pick 精选</p>
+<h2>显示结构</h2>
+<p><code>git log --graph --oneline --decorate</code></p>
+<h2>创建忽略文件</h2>
+<p>将项目提交到github上，需要在github上创建一个空的仓库</p>
+<h2>添加远程仓库的连接</h2>
+<p><code>git remote add 名字  地址</code></p>
+<h2>查看配置的所有配置的地址</h2>
+<p><code>git remote -v</code></p>
+<h2>删除地址</h2>
+<p><code>git remote rm 名字</code></p>
+<h2>upstream</h2>
+<p><code>-u 下次提交或者拉取代码可以直接git push 或者git pull</code></p>
 
 </body>
 </html>
